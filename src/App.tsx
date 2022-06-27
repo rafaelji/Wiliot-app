@@ -7,6 +7,7 @@ import "./app.css";
 function App() {
   const wsRef = useRef<WebSocket>();
   const [data, setData] = useState<Array<Product>>([]);
+  const [shouldGetData, setShouldGetData] = useState(true);
 
   useEffect(() => {
     wsRef.current = new WebSocket(process.env.REACT_APP_API_URL || "");
@@ -30,12 +31,21 @@ function App() {
     if (!wsRef.current) return;
 
     wsRef.current.onmessage = (event) => {
+      if (!shouldGetData) return;
+
       const temp = [...data];
       const result = temp.concat(JSON.parse(event.data));
       setData(result);
-      console.log("hey", data);
     };
-  }, [data]);
+  }, [data, shouldGetData]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setShouldGetData(false);
+    }, 5 * 60000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <>

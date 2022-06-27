@@ -43,9 +43,7 @@ function App() {
   const [rawData, setRawData] = useState<Array<Product>>([]);
   const [shouldGetData, setShouldGetData] = useState(true);
 
-  const labels = [
-    ...new Set(rawData.map((item) => new Date(item.timestamp).toISOString())),
-  ];
+  const labels = [...new Set(rawData.map((item) => item.timestamp))];
 
   const chartData = {
     labels,
@@ -91,7 +89,12 @@ function App() {
 
       const temp = [...rawData];
       const result = temp.concat(JSON.parse(event.data));
-      setRawData(result);
+      setRawData(
+        result.map((item) => ({
+          ...item,
+          timestamp: new Date(item.timestamp).toISOString(),
+        }))
+      );
     };
   }, [rawData, shouldGetData]);
 

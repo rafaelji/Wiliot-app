@@ -1,18 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./components/header";
+import { Product } from "./common/types";
 
 import "./app.css";
 
 function App() {
-  useEffect(() => {
-    const ws = new WebSocket(process.env.REACT_APP_API_URL || "");
+  const wsRef = useRef<WebSocket>();
+  const [data, setData] = useState<Array<Product>>([]);
 
-    ws.onmessage = (event) => {
-      console.log("hey", JSON.parse(event.data));
+  useEffect(() => {
+    wsRef.current = new WebSocket(process.env.REACT_APP_API_URL || "");
+
+    wsRef.current.onopen = () => {
+      // todo show toast
+      console.log("connection opened");
     };
 
-    return () => ws.close();
+    wsRef.current.onclose = () => {
+      // todo show toast
+      console.log("connection closed");
+    };
+
+    const wsCurrent = wsRef.current;
+
+    return () => wsCurrent.close();
   }, []);
+
+  useEffect(() => {
+    if (!wsRef.current) return;
+
+    wsRef.current.onmessage = (event) => {
+      const temp = [...data];
+      const result = temp.concat(JSON.parse(event.data));
+      setData(result);
+      console.log("hey", data);
+    };
+  }, [data]);
 
   return (
     <>

@@ -90,10 +90,12 @@ function App() {
       const temp = [...rawData];
       const result = temp.concat(JSON.parse(event.data));
       setRawData(
-        result.map((item) => ({
-          ...item,
-          timestamp: new Date(item.timestamp).toISOString(),
-        }))
+        result
+          .filter((item) => item.data <= 100)
+          .map((item) => ({
+            ...item,
+            timestamp: new Date(item.timestamp).toISOString(),
+          }))
       );
     };
   }, [rawData, shouldGetData]);

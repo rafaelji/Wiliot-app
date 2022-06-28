@@ -14,7 +14,7 @@ import {
 } from "chart.js";
 
 import "./app.css";
-import CurrentTemperature from "./components/current-temperature";
+import TemperatureBox from "./components/temperature-box";
 
 ChartJS.register(
   CategoryScale,
@@ -42,8 +42,7 @@ export const options = {
 function App() {
   const wsRef = useRef<WebSocket>();
   const [rawData, setRawData] = useState<Array<Product>>([]);
-  const [id1Data, setId1Data] = useState<{ id: number; temperature: number }>();
-  const [id2Data, setId2Data] = useState<{ id: number; temperature: number }>();
+
   const [shouldGetData, setShouldGetData] = useState(true);
 
   const labels = [...new Set(rawData.map((item) => item.timestamp))];
@@ -104,16 +103,6 @@ function App() {
   }, [rawData, shouldGetData]);
 
   useEffect(() => {
-    const list = rawData.filter((item) => item.id === 1);
-    setId1Data(list[list.length - 1]);
-  }, [rawData]);
-
-  useEffect(() => {
-    const list = rawData.filter((item) => item.id === 2);
-    setId2Data(list[list.length - 1]);
-  }, [rawData]);
-
-  useEffect(() => {
     const intervalId = setInterval(() => {
       setShouldGetData(false);
     }, 5 * 60000);
@@ -126,18 +115,7 @@ function App() {
       <Header />
       <main>
         <div className={"main-content-container"}>
-          {id1Data && (
-            <CurrentTemperature
-              id={id1Data.id}
-              temperature={id1Data.temperature}
-            />
-          )}
-          {id2Data && (
-            <CurrentTemperature
-              id={id2Data.id}
-              temperature={id2Data.temperature}
-            />
-          )}
+          <TemperatureBox data={rawData} />
           <Line options={options} data={chartData} />
         </div>
       </main>

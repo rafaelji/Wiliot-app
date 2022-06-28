@@ -9,3 +9,7 @@ export interface CurrentTemperatureProps {
   id: number;
   temperature: number;
 }
+
+export interface TemperatureBoxProps {
+  data: Array<Product>;
+}

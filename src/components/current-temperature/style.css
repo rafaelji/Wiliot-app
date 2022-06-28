@@ -4,6 +4,8 @@
     align-items: flex-start;
     border: 1px solid #dee3ed;
     padding: 20px;
+    width: 100%;
+    margin: 10px;
 }
 
 .id-temperature-title {

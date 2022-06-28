@@ -20,7 +20,6 @@ function App() {
           <Chart data={data} />
         </div>
       </main>
-      <footer></footer>
     </>
   );
 }

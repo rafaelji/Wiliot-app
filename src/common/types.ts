@@ -13,3 +13,7 @@ export interface CurrentTemperatureProps {
 export interface TemperatureBoxProps {
   data: Array<Product>;
 }
+
+export interface ChartComponentProps {
+  data: Array<Product>;
+}

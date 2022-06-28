@@ -1,0 +1,17 @@
+.id-temperature {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #dee3ed;
+    padding: 20px;
+}
+
+.id-temperature-title {
+    text-transform: uppercase;
+    color: black;
+}
+
+.id-temperature-value {
+    text-transform: capitalize;
+    color: gray;
+}

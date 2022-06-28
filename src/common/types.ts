@@ -4,3 +4,8 @@ export interface Product {
   data: number;
   timestamp: string;
 }
+
+export interface CurrentTemperatureProps {
+  id: number;
+  temperature: number;
+}

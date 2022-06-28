@@ -1,13 +1,9 @@
-import React from "react";
-import Header from "./components/header";
-import TemperatureBox from "./components/temperature-box";
-import Chart from "./components/chart";
-import useGetTemperatureAndData from "./hooks/use-get-temperature-and-data";
+import { useEffect, useRef, useState } from "react";
+import { Product } from "../../common/types";
 
-import "./app.css";
-
-function App() {
-  const { rawData } = useGetTemperatureAndData();
+const useGetTemperatureAndData = () => {
+  const wsRef = useRef<WebSocket>();
+  const [rawData, setRawData] = useState<Array<Product>>([]);
 
   const [shouldGetData, setShouldGetData] = useState(true);
 
@@ -51,23 +47,15 @@ function App() {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setShouldGetData(false);
-    }, 5 * 60000);
+      // }, 5 * 60000);
+    }, 5000);
 
     return () => clearInterval(intervalId);
   }, []);
 
-  return (
-    <>
-      <Header />
-      <main>
-        <div className={"main-content-container"}>
-          <TemperatureBox data={rawData} />
-          <Chart data={rawData} />
-        </div>
-      </main>
-      <footer></footer>
-    </>
-  );
-}
+  return {
+    rawData,
+  };
+};
 
-export default App;
+export default useGetTemperatureAndData;

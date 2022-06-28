@@ -1,0 +1,31 @@
+.toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 260px;
+    height: 50px;
+    border: 1px solid #dee3ed;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: rgba(50, 50, 93, 0.25) 0 2px 5px -1px, rgba(0, 0, 0, 0.3) 0 1px 3px -1px;
+    transform: translateY(120px);
+    filter: opacity(0);
+    transition: all 1s;
+    cursor: pointer;
+}
+
+.toast.show {
+    transform: translateY(0);
+    filter: opacity(1);
+}
+
+.toast-content {
+    margin: 0;
+    font-size: 20px;
+    line-height: 20px;
+    text-transform: capitalize;
+}

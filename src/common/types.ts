@@ -27,5 +27,5 @@ export interface ToastContextType {
 
 export interface ToastType {
   show: boolean;
-  content: string;
+  content?: string;
 }

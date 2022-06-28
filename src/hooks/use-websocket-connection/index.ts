@@ -11,11 +11,11 @@ const useWebsocketConnection = () => {
     wsRef.current = new WebSocket(process.env.REACT_APP_API_URL || "");
 
     wsRef.current.onopen = () => {
-      setToast({ show: true, content: "connection opened" });
+      setToast({ show: true, content: "connection opened!" });
     };
 
     wsRef.current.onclose = () => {
-      setToast({ show: true, content: "connection closed" });
+      setToast({ show: true, content: "connection closed!" });
     };
 
     const wsCurrent = wsRef.current;

@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Product } from "../../common/types";
+import useToast from "../use-toast";
 
 const useWebsocketConnection = () => {
+  const { setToast } = useToast();
   const [rawData, setRawData] = useState<Array<Product>>([]);
   const wsRef = useRef<WebSocket>();
 
@@ -9,13 +11,11 @@ const useWebsocketConnection = () => {
     wsRef.current = new WebSocket(process.env.REACT_APP_API_URL || "");
 
     wsRef.current.onopen = () => {
-      // todo show toast
-      console.log("connection opened");
+      setToast({ show: true, content: "connection opened" });
     };
 
     wsRef.current.onclose = () => {
-      // todo show toast
-      console.log("connection closed");
+      setToast({ show: true, content: "connection closed" });
     };
 
     const wsCurrent = wsRef.current;
